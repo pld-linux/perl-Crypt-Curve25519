@@ -1,6 +1,5 @@
 %define		pdir	Crypt
 %define		pnam	Curve25519
-%include	/usr/lib/rpm/macros.perl
 Summary:	Crypt::Curve25519 Perl module - Generate shared secret using elliptic-curve Diffie-Hellman function
 Name:		perl-Crypt-Curve25519
 Version:	0.06
