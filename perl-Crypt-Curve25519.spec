@@ -1,15 +1,18 @@
+#
+# Conditional build:
+%bcond_without	tests	# do not perform "make test"
+#
 %define		pdir	Crypt
 %define		pnam	Curve25519
 Summary:	Crypt::Curve25519 Perl module - Generate shared secret using elliptic-curve Diffie-Hellman function
 Name:		perl-Crypt-Curve25519
-Version:	0.06
-Release:	8
+Version:	0.08
+Release:	1
 # same as perl
 License:	GPL v1+ or Artistic
 Group:		Development/Languages/Perl
-Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version}.tar.gz
-# Source0-md5:	631c7a0e799994712e3d802317615a4c
-Patch0:		%{name}-fmul.patch
+Source0:	https://www.cpan.org/modules/by-authors/id/K/KA/KARASIK/%{pdir}-%{pnam}-%{version}.tar.gz
+# Source0-md5:	82b3b5f8252401c6399b8383e7789a38
 URL:		http://search.cpan.org/dist/Crypt-Curve25519/
 BuildRequires:	perl-ExtUtils-MakeMaker >= 6.56
 BuildRequires:	perl-devel >= 1:5.8.0
@@ -28,12 +31,13 @@ encrypt messages between the two users.
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
-%patch -P0 -p1
 
 %build
 %{__perl} Makefile.PL \
 	INSTALLDIRS=vendor
 %{__make}
+
+%{?with_tests:%{__make} test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -46,7 +50,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Changes README
+%doc Changes README.md
 %dir %{perl_vendorarch}/auto/Crypt/Curve25519
 %attr(755,root,root) %{perl_vendorarch}/auto/Crypt/Curve25519/Curve25519.so
 %{perl_vendorarch}/Crypt/Curve25519.pm
